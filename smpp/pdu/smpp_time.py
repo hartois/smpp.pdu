@@ -16,6 +16,7 @@ Copyright 2009-2010 Mozes, Inc.
 
 from datetime import datetime, tzinfo, timedelta
 from collections import namedtuple
+import math
 
 class FixedOffset(tzinfo):
     """Fixed offset in minutes east from UTC."""
@@ -118,7 +119,7 @@ def unparse_absolute_time(dt):
     if not isinstance(dt, datetime):
         raise ValueError("input must be a datetime but got %s" % type(dt))
     YYMMDDhhmmss = unparse_YYMMDDhhmmss(dt)
-    tenthsOfSeconds = dt.microsecond/(100*1000)
+    tenthsOfSeconds = math.floor(dt.microsecond/(100*1000))
     quarterHrOffset = 0
     p = b'+'
     if dt.tzinfo is not None:
